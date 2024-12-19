@@ -45,6 +45,8 @@ jobs:
             # Pull the image from DockerHub
             docker pull neermor/webapp
             sudo usermod -aG docker ec2-user  # Add ec2-user to docker group
+            # Debugging SSH connection
+            ssh -v ec2-user@${{ secrets.EC2_IP }} "echo 'Connected to EC2'"
             newgrp docker  # Apply group changes
             # Run the container on EC2
             docker run -d -p 8080:80 neermor/webapp
