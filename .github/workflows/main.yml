@@ -45,4 +45,5 @@ jobs:
             # Pull the image from DockerHub
             docker pull neermor/webapp
             # Run the container on EC2
+            sudo usermod -aG docker $USER
             docker run -d -p 8080:80 neermor/webapp
