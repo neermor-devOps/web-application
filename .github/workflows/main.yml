@@ -30,3 +30,24 @@ jobs:
         run: |
           docker build -t neermor/webapp .
           docker push neermor/webapp
+ 
+      # SSH into EC2 and deploy the container
+      - name: SSH to EC2 and deploy Docker container
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            # Install Docker if not installed
+            sudo yum install -y docker
+            sudo service docker start
+            # Pull the image from DockerHub
+            docker pull neermor/webapp
+            sudo usermod -aG docker $(whoami)  # Add ec2-user to docker group
+ 
+            # Debugging SSH connection
+            ssh -v $(whoami)@${{ secrets.EC2_IP }} "echo 'Connected to EC2'"
+            newgrp docker  # Apply group changes ok
+            # Run the container on EC2
+            docker run -d --network host -p 8080:80 neermor/webapp
