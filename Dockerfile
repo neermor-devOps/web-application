@@ -4,7 +4,7 @@ FROM nginx:alpine
 # Copy the index.html into the Nginx server's root directory
 COPY index.html /usr/share/nginx/html/index.html
 
-# Expose port 
+# Expose ports 
 EXPOSE 80
 
 # Start the Nginx server
