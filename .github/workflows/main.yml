@@ -56,4 +56,4 @@ jobs:
             sudo systemctl status nginx
 
             # Run the container on EC2
-            docker run -d --network host -p 8081:80 neermor/webapp
+            docker run -d --network host -p 8080:80 neermor/webapp
