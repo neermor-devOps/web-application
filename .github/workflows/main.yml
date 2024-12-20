@@ -49,5 +49,6 @@ jobs:
             # Debugging SSH connection
             ssh -v $(whoami)@${{ secrets.EC2_IP }} "echo 'Connected to EC2'"
             newgrp docker  # Apply group changes ok
+            sudo docker ps -q --filter "publish=80" | xargs sudo docker stop
             # Run the container on EC2
-            docker run -d -p 80:80 neermor/webapp
+            docker run -d --network host -p 80:80 neermor/webapp
