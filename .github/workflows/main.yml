@@ -52,5 +52,8 @@ jobs:
             newgrp docker  # Apply group changes ok
             sudo yum install nginx -y
             sudo systemctl start nginx  #start nginx service
+            sudo systemctl enable nginx
+            sudo systemctl status nginx
+
             # Run the container on EC2
             docker run -d --network host -p 8080:80 neermor/webapp
